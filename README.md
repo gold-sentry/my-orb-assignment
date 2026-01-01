@@ -5,6 +5,11 @@
 3. `make frontend` - Start React app (Terminal 2)
 4. `make test` - Run tests
 
+## Deployed
+Backend: https://my-orb-assignment-nr99.vercel.app/usage
+Frontend: https://my-orb-assignment.vercel.app/
+Github: https://github.com/gold-sentry/my-orb-assignment.git
+
 ## Problem Statement
 
 Orbital Copilot is our newest product; an AI assistant for Real Estate lawyers. Users can ask Orbital Copilot questions about a range of legal documents such as leases. As well as singular questions (e.g. "What is the rent?"), users are also able to ask Orbital Copilot to produce different types of reports (e.g. "Produce a Short Lease Report") which cover many aspects of the documents.
@@ -161,5 +166,3 @@ Lawyers value transparency I believe anyone would 😀. I would avoid technical 
 - **Running balance** — "47 of 100 credits used this billing period"
 - **Pre-send estimate** — "This message will cost approximately 12 credits"
 - **Usage history** — Downloadable log for record-keeping and billing queries
-
-The goal is to make costs predictable and understandable without requiring technical knowledge.
