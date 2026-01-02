@@ -1,4 +1,3 @@
-// src/components/chart/ChartTooltip.tsx
 import { formatCompact } from '../../utils/formatters';
 import { chartTheme } from '../../constants/theme';
 

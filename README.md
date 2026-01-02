@@ -29,8 +29,7 @@ Also the sample data given in the endpoint did not return same report name with 
 I adopted a "Compound Component" pattern where applicable and separated concerns:
 - **Presentation vs. Logic:** Hooks like `usePagination`, `useTableSort`, and `useUsageData` encapsulate logic, keeping components like `UsageTable` focused on rendering.
 
-- **Component Breakdown:** Small, reusable atoms like `StatCard`, `ChartTooltip`, and `TableSearch` are composed into larger features.
-
+- **Component Breakdown:** Small, reusable parts like `StatCard`, `ChartTooltip`, and `TableSearch` are composed into larger features. While this added a bit of complexity to the codebase, it made it easier for me to actually read the UI code.
 
 ### 3. Responsive & Accessible Design
 - **Mobile-Responsive:** I validated the design on mobile screen to ensure we have a working layout. Since it wasnt exactly stated what device lawyers use.
@@ -40,7 +39,7 @@ I adopted a "Compound Component" pattern where applicable and separated concerns
 To test how this UI would behave i mocked ~50k record of messages, due to this i adjusted the formatting done on the graph to ensure readability.
 
 ### 5. Sorting Performance
-I used useMemo to memoize the sorted data, preventing expensive sort operations from running on every render. With 100 messages the performance impact was negligible, but at 50k rows I observed UI freezing without memoization.
+I used useMemo to memoize the sorted data, preventing expensive sort operations from running on every render. With 100 messages the performance impact was negligible, but at 50k rows I observed minute UI freezing without memoization.
 
 ### 6. Testing 
 Given time constraints i only implemented unit tests for the hooks and major components.  
@@ -101,8 +100,11 @@ It's worth noting that these tokenizers require encoding files to be downloaded 
 
 **Caching**
 
-The current implementation uses a simple in-memory cache for reports due to **time constraints**. This works but has limitations:
+The current implementation uses a simple in-memory cache for reports due to **time constraints**. in the sample endpoint provided 
+Total: 29 reports, but only 5 unique report types
+With cache: 5 API calls (one per unique report type)
 
+ This works but has limitations:
 - **No TTL** — Cached data never expires. If reports were updated, we'd serve stale data.
 - **No memory bounds** — The cache grows indefinitely, which could cause memory issues at scale.
 - **Not shared across instances** — Each service instance maintains its own cache.
@@ -162,7 +164,13 @@ Lawyers value transparency I believe anyone would 😀. I would avoid technical 
 
 ### What information would you expose in the UI?
 
+In addition to the stat card i added i think these are other information to consider.
+
 - **Cost per message** — Show credits charged next to each message
 - **Running balance** — "47 of 100 credits used this billing period"
-- **Pre-send estimate** — "This message will cost approximately 12 credits"
+- Total message with and without report generated more like a percentage of the total messages.
 - **Usage history** — Downloadable log for record-keeping and billing queries
+- **Custom Range Filter** — While this may not be a UI i think it would be useful to have a custom range filter for users to be able to view their usage history for a specific time period.
+- Ideally i would expect the lawyers to have a UI that allows them to easily filter by credit used and report type, the idea here would be to allow to easily know which report is costing them the highest amount of credits.
+- Average credit usage per report type, maybe a drop down that allows them to select the report type and see the average credit usage for that report type.
+- Not important maybe the highest credit spent on a single message. 
