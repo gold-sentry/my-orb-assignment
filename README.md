@@ -115,8 +115,7 @@ With cache: 5 API calls (one per unique report type)
 
 - **No TTL** — Cached data never expires. If reports were updated, we'd serve stale data.
 - **No memory bounds** — The cache grows indefinitely, which could cause memory issues at scale.
-- **Not shared across instances** — Each service instance maintains its own cache.
-- **Lost on restart** — The cache empties when the service restarts.
+- **Lost on restart** — The cache empties when the service restarts. Infact in this case since the cache is inmemory it is only useful on the current request.
 
 In production, we would use **Redis or Memcached** for shared caching with TTL and eviction policies.
 
