@@ -6,9 +6,10 @@
 4. `make test` - Run tests
 
 ## Deployed
-Backend: https://my-orb-assignment-nr99.vercel.app/usage
-Frontend: https://my-orb-assignment.vercel.app/
-Github: https://github.com/gold-sentry/my-orb-assignment.git
+
+1. Backend: <https://my-orb-assignment-nr99.vercel.app/usage>
+2. Frontend: <https://my-orb-assignment.vercel.app/>
+3. Github: <https://github.com/gold-sentry/my-orb-assignment.git>
 
 ## Problem Statement
 
@@ -21,27 +22,33 @@ Orbital Copilot works on a consumption basis. Customers will be charged dependin
 ## Frontend Implementation Decisions
 
 ### 1. Sorting
+
 Given that this work requires the use of multiple sorting states, I implemented a custom sorting hook that allows for multiple sorting states. This logic prioritizes the most recently clicked column as the primary sort, with the other column acting as a secondary sort for tiebreakers.
 
-Also the sample data given in the endpoint did not return same report name with different credit usage, To test this i added a temporary entry to the data. 
+Also the sample data given in the endpoint did not return same report name with different credit usage, To test this i added a temporary entry to the data.
 
 ### 2. Component Architecture
+
 I adopted a "Compound Component" pattern where applicable and separated concerns:
+
 - **Presentation vs. Logic:** Hooks like `usePagination`, `useTableSort`, and `useUsageData` encapsulate logic, keeping components like `UsageTable` focused on rendering.
 
 - **Component Breakdown:** Small, reusable parts like `StatCard`, `ChartTooltip`, and `TableSearch` are composed into larger features. While this added a bit of complexity to the codebase, it made it easier for me to actually read the UI code.
 
 ### 3. Responsive & Accessible Design
+
 - **Mobile-Responsive:** I validated the design on mobile screen to ensure we have a working layout. Since it wasnt exactly stated what device lawyers use.
 
-
 ### 4. Design on Large Data
+
 To test how this UI would behave i mocked ~50k record of messages, due to this i adjusted the formatting done on the graph to ensure readability.
 
 ### 5. Sorting Performance
+
 I used useMemo to memoize the sorted data, preventing expensive sort operations from running on every render. With 100 messages the performance impact was negligible, but at 50k rows I observed minute UI freezing without memoization.
 
-### 6. Testing 
+### 6. Testing
+
 Given time constraints i only implemented unit tests for the hooks and major components.  
 
 ## Backend Design Decisions
@@ -100,11 +107,12 @@ It's worth noting that these tokenizers require encoding files to be downloaded 
 
 **Caching**
 
-The current implementation uses a simple in-memory cache for reports due to **time constraints**. in the sample endpoint provided 
+The current implementation uses a simple in-memory cache for reports due to **time constraints**. in the sample endpoint provided
 Total: 29 reports, but only 5 unique report types
 With cache: 5 API calls (one per unique report type)
 
  This works but has limitations:
+
 - **No TTL** — Cached data never expires. If reports were updated, we'd serve stale data.
 - **No memory bounds** — The cache grows indefinitely, which could cause memory issues at scale.
 - **Not shared across instances** — Each service instance maintains its own cache.
@@ -132,6 +140,7 @@ Different document types have different complexity and business value. A merger 
 Simple lookups ("what does clause 5 mean?") cost less than complex analysis ("identify all liability risks"). We can detect intent via keyword matching or a classifier.
 
 *Considerations:*
+
 - Intent detection adds latency
 - Users could game the system by phrasing complex requests as simple questions
 
@@ -142,6 +151,7 @@ Use tokens as a baseline with volume discounts. First 1,000 tokens at full rate,
 If the model returns low confidence, charge less. This aligns incentives — users pay full price only for high-quality outputs.
 
 *Considerations:*
+
 - Confidence scores can have outliers
 - Would need monitoring to detect anomalies
 
@@ -173,4 +183,4 @@ In addition to the stat card i added i think these are other information to cons
 - **Custom Range Filter** — While this may not be a UI i think it would be useful to have a custom range filter for users to be able to view their usage history for a specific time period.
 - Ideally i would expect the lawyers to have a UI that allows them to easily filter by credit used and report type, the idea here would be to allow to easily know which report is costing them the highest amount of credits.
 - Average credit usage per report type, maybe a drop down that allows them to select the report type and see the average credit usage for that report type.
-- Not important maybe the highest credit spent on a single message. 
+- Not important maybe the highest credit spent on a single message.
