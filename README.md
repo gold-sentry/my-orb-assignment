@@ -45,7 +45,7 @@ To test how this UI would behave i mocked ~50k record of messages, due to this i
 
 ### 5. Sorting Performance
 
-I used useMemo to memoize the sorted data, preventing expensive sort operations from running on every render. With 100 messages the performance impact was negligible, but at 50k rows I observed minute UI freezing without memoization.
+I used useMemo to memoize the sorted data, preventing expensive sort operations from running on every render. With 100 messages the performance impact was negligible, but at 50k rows I observed minute or very little UI freezing without memoization. I wonder maybe this is because i have not enabled react 19 compiler.
 
 ### 6. Testing
 
