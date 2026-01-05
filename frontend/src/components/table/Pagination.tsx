@@ -24,6 +24,7 @@ export const Pagination = ({
             <div className="flex items-center gap-2 order-1 md:order-2 w-full md:w-auto justify-center">
                 <button
                     type="button"
+                    data-testid="pagination-prev"
                     onClick={() => onPageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                     className="px-3 py-1.5 text-sm font-medium rounded-lg border border-slate-200 
@@ -32,11 +33,12 @@ export const Pagination = ({
                 >
                     Previous
                 </button>
-                <span className="text-sm text-slate-600 px-2">
+                <span data-testid="pagination-info" className="text-sm text-slate-600 px-2">
                     {currentPage} / {totalPages}
                 </span>
                 <button
                     type="button"
+                    data-testid="pagination-next"
                     onClick={() => onPageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
                     className="px-3 py-1.5 text-sm font-medium rounded-lg border border-slate-200 

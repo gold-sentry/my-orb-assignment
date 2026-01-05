@@ -7,7 +7,7 @@ interface UsageTableRowProps {
 
 export const UsageTableRow = ({ item }: UsageTableRowProps) => {
     return (
-        <tr className="hover:bg-slate-50 transition-colors duration-150 h-14 cursor-pointer">
+        <tr data-testid={`usage-row-${item.messageId}`} className="hover:bg-slate-50 transition-colors duration-150 h-14 cursor-pointer">
             <td className="px-6 py-4 whitespace-nowrap">
                 <span className="text-slate-700 font-mono text-sm">
                     {item.messageId}
